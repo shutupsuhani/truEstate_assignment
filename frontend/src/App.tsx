@@ -36,61 +36,6 @@ function App() {
     totalDiscount: 0,
   });
 
-
-
-  /*const fetchTransactions = async (page: number = 1) => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await fetch(`http://localhost:5000/sales?page=${page}&limit=${ITEMS_PER_PAGE}`);
-      const data = await response.json();
-
-      if (!data.data || data.data.length === 0) {
-        setTransactions([]);
-        setError('No transactions found');
-        setTotalPages(1);
-        setTotal(0);
-        setStats({ totalUnits: 0, totalAmount: 0, totalDiscount: 0 });
-        return;
-      }
-
-      // Map backend fields to frontend-friendly keys
-      const mappedTransactions: Transaction[] = data.data.map((tx: any) => ({
-        _id: tx._id,
-        transaction_id: tx["Transaction ID"],
-        date: tx["Date"],
-        customer_name: tx["Customer Name"],
-        phone_number: tx["Phone Number"],
-        gender: tx["Gender"],
-        age: Number(tx["Age"]),
-        product_category: tx["Product Category"],
-        quantity: Number(tx["Quantity"]),
-        price_per_unit: Number(tx["Price per Unit"]),
-        discount_percentage: Number(tx["Discount Percentage"]),
-        total_amount: Number(tx["Total Amount"]),
-        final_amount: Number(tx["Final Amount"]),
-        payment_method: tx["Payment Method"],
-        order_status: tx["Order Status"],
-        delivery_type: tx["Delivery Type"],
-        store_location: tx["Store Location"],
-        employee_name: tx["Employee Name"],
-      }));
-
-      setTransactions(mappedTransactions);
-      setCurrentPage(page);
-      setTotalPages(data.totalPages || 1);
-      setTotal(data.total || mappedTransactions.length);
-      calculateStats(mappedTransactions);
-    } catch (err) {
-      console.error(err);
-      setError('Failed to fetch transactions. Check your API.');
-      setTransactions([]);
-    } finally {
-      setLoading(false);
-    }
-  }; */
-
   const fetchTransactions = async (page: number = 1, appliedFilters = filters) => {
   try {
     setLoading(true);
@@ -102,7 +47,7 @@ function App() {
       ...appliedFilters
     });
 
-    const response = await fetch(`http://localhost:5000/sales?${params}`);
+    const response = await fetch(`https://tru-estate-assignment-backend.vercel.app/sales?${params}`);
     const data = await response.json();
 
     if (!data.data || data.data.length === 0) {
